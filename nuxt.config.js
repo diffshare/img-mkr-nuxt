@@ -42,7 +42,9 @@ export default {
   /*
   ** Nuxt.js modules
   */
-  modules: [],
+  modules: [
+    '@nuxtjs/markdownit'
+  ],
   /*
   ** Build configuration
   */
@@ -52,5 +54,17 @@ export default {
     */
     extend(config, ctx) {
     }
-  }
+  },
+
+  markdownit: {
+    injected: true,
+    html: true,
+  },
+
+  // for Google Cloud Run
+  server: {
+    port: process.env.PORT || 3000,
+    host: '0.0.0.0',
+    timing: false
+  },
 }

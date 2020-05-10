@@ -8,14 +8,22 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "deploy": "gcloud builds submit"
   },
   "dependencies": {
+    "@nuxtjs/markdownit": "^1.2.9",
     "html2canvas": "^1.0.0-rc.5",
     "nuxt": "^2.0.0"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.6.0",
-    "@nuxtjs/tailwindcss": "^1.0.0"
+    "@nuxtjs/tailwindcss": "^1.0.0",
+    "node-sass": "^4.14.1",
+    "pug": "^2.0.4",
+    "pug-loader": "^2.4.0",
+    "pug-plain-loader": "^1.0.0",
+    "sass-loader": "^8.0.2",
+    "slim-lang-loader": "^0.0.9"
   }
 }

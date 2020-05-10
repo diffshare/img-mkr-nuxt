@@ -1,10 +1,15 @@
-<template>
-  <div class="container">
-    <div id="target">
-      <p>あああああああ</p>
-    </div>
-    <img id="result"/>
-  </div>
+<template lang="pug">
+div.container
+  input(type="text" v-model="title")
+  br
+  textarea(type="text" v-model="message")
+  div {{$md.render(message)}}
+  br
+  button(@click="createBlob") 再レンダリング
+  div#target
+    .title {{title}}
+    div(v-html="$md.render(message)")
+  img#result
 </template>
 
 <script lang="ts">
@@ -16,60 +21,67 @@ export default Vue.extend({
     Logo
   },
 
+  data() {
+    return {
+      title: 'たぬき油性マジック',
+      message: 'メッセージ',
+    }
+  },
+
   computed: {
   },
 
   async mounted() {
-    const target = document.querySelector("#target") as HTMLElement;
-    const canvas = await this.$html2canvas(target, {
-      width: 1280,
-      height: 720
-    });
-    const img = document.querySelector("#result") as HTMLImageElement;
-    const blob = await new Promise(resolve => canvas.toBlob(resolve));
-    img.src = URL.createObjectURL(blob);
-  }
+    await this.createBlob();
+  },
+
+  methods: {
+    async createBlob() {
+      const target = document.querySelector("#target") as HTMLElement;
+      const canvas = await this.$html2canvas(target, {
+        width: 1280,
+        height: 720
+      });
+      const img = document.querySelector("#result") as HTMLImageElement;
+      const blob = await new Promise(resolve => canvas.toBlob(resolve));
+      img.src = URL.createObjectURL(blob);
+    },
+  },
 })
 </script>
 
-<style>
-#result {
-  border: 1px solid black;
-}
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-  @apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
-/*
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-*/
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
+<style lang="sass">
+@font-face
+  font-family: 'TanukiMagic'
+  src: url("~assets/fonts/TanukiMagic.ttf")
+body
+  background: #eee
+.container
+  margin: 20px
+#target
+  width: 1280px
+  height: 720px
+  background: url("~assets/images/cardboard.jpg")
+  padding: 20px 40px
+  font-family: "TanukiMagic", sans-serif
+  font-weight: bold
+#result
+  border: 1px solid red
+.title
+  font-size: 100px
+  font-weight: bold
+p
+  font-size: 50px
+textarea
+  height: 200px
+  width: 500px
+h1
+  font-size: 100px
+  font-weight: bold
+  strong
+    text-shadow: 5px 5px 0 black
+h2
+  font-size: 80px
+  font-weight: bold
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
 </style>
